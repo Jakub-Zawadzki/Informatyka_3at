@@ -15,6 +15,8 @@ liczba = "1011"
 podstawa = 2     
 system_docelowy = 8  
 
+#commit mi nie dziala
+
 dziesietna = horner(liczba, podstawa)
 print(f"Liczba {liczba} w systemie {podstawa} to {dziesietna} w dziesiętnym.")
 
