@@ -1,0 +1,35 @@
+def hanoi(n):
+    if n==1:
+        return 1
+    return 2*hanoi(n-1) + 1
+print(hanoi(4))
+
+def potega(a,n):
+    b=a
+    for i in  range(n-1):
+        b=b*a
+    return b
+print(potega(2,10))
+
+def szybkie_potegowanie(a,n):
+    b=1
+    while n>0:
+        if n%2==1:
+            b=b*a
+        n=n//2
+        if n>0:
+            a=a*a
+    return b
+print(szybkie_potegowanie(3,30))
+
+def hanoi2(n):
+    b=1
+    a=2
+    while n>0:
+        if n%2==1:
+            b=b*a
+        n=n//2
+        if n>0:
+            a=a*a
+    return b-1
+print(hanoi2(4))
