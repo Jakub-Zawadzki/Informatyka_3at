@@ -1,0 +1,52 @@
+def szyfruj_50(tekst, klucz):
+    tekst = list(tekst)
+    for i in range(50):
+        indeks1 = i
+        indeks2 =  klucz[i] - 1
+        tekst[indeks1], tekst[indeks2] = tekst[indeks2], tekst[indeks1]
+    return ''.join(tekst)
+
+with open('INFORMATYKA/Informatyka_3at/CKE_ZBIOR/zad__76/szyfr1.txt') as plik:
+    linie = plik.read().splitlines()
+    teksty_do_szyfrowania = linie[:6]
+    klucz = list(map(int, linie[6].split()))
+
+wyniki_szyfrowania = [szyfruj_50(tekst, klucz) for tekst in teksty_do_szyfrowania]
+
+for zaszyfrowany_tekst in wyniki_szyfrowania:
+    print(zaszyfrowany_tekst + "\n")
+
+
+def szyfrowanie(tekst, klucz):
+    tekst = list(tekst)
+    dlugosc_klucza = len(klucz)
+    for i in range(len(tekst)):
+        indeks1, indeks2 = i, klucz[i % dlugosc_klucza] - 1
+        tekst[indeks1], tekst[indeks2] = tekst[indeks2], tekst[indeks1]
+    return ''.join(tekst)
+
+with open('informatyka/dane/76/szyfr2.txt') as plik:
+    linie = plik.read().splitlines()
+    tekst_do_szyfrowania = linie[0]
+    klucz = list(map(int, linie[1].split()))
+
+wynik_szyfrowania = szyfrowanie(tekst_do_szyfrowania, klucz)
+
+print(wynik_szyfrowania)
+
+
+def deszyfruj(tekst_zaszyfrowany, klucz):
+    tekst = list(tekst_zaszyfrowany)
+    dlugosc_klucza = len(klucz)
+    for i in range(49, -1, -1):
+        indeks1, indeks2 = i, klucz[i % dlugosc_klucza] - 1
+        tekst[indeks1], tekst[indeks2] = tekst[indeks2], tekst[indeks1]
+    return ''.join(tekst)
+
+with open('informatyka/dane/76/szyfr3.txt') as plik:
+    tekst_zaszyfrowany = plik.read().strip()
+
+klucz_deszyfrowania = [6, 2, 4, 1, 5, 3]
+wynik_odszyfrowania = deszyfruj(tekst_zaszyfrowany, klucz_deszyfrowania)
+
+print(wynik_odszyfrowania)

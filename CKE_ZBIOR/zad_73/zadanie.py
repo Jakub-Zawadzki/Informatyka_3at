@@ -1,4 +1,4 @@
-with open("zad_73/tekst.txt") as plik:
+with open("CKE/zad_73/tekst.txt") as plik:
     tekst = plik.readline()
 print(tekst)
 ile = 0

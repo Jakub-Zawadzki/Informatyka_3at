@@ -8,7 +8,7 @@ def szyfruj(napis, A, B):
         znakS = chr(numer + 97)
         zaszyfrowany +=znakS
     return zaszyfrowany
-with open("tekst.txt") as plik:
+with open("CKE/zad_75/tekst.txt") as plik:
     tekst = plik.readline()
 print(tekst)
 wyrazy = tekst.split()
@@ -21,7 +21,7 @@ for wyraz in wyrazy:
     if len(wyraz) >= 10:
         print(szyfruj(wyraz, 5 , 2))
 
-with open("probka.txt") as plik:
+with open("CKE/zad_75/probka.txt") as plik:
     for linia in plik:
         napisy = linia.split()
         for a in range(26):

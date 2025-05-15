@@ -1,0 +1,94 @@
+def vigenere(tekst, klucz, szyfruj=True):
+    zaszyfrowany_tekst = ""
+    dlugosc_klucza = len(klucz)
+    indeks_klucza = 0
+    liczba_powtorzen = 1
+
+    for znak in tekst:
+        if 'A' <= znak <= 'Z':
+            przesuniecie = ord(klucz[indeks_klucza % dlugosc_klucza]) - ord('A')
+            ascii = ord(znak) + przesuniecie if szyfruj else ord(znak) - przesuniecie
+
+            if ascii > ord('Z'):
+                ascii -= 26
+            if ascii < ord('A'):
+                ascii += 26
+
+            zaszyfrowany_tekst += chr(ascii)
+            indeks_klucza += 1
+
+            if indeks_klucza % dlugosc_klucza == 0:
+                liczba_powtorzen += 1
+        else:
+            zaszyfrowany_tekst += znak
+
+    return zaszyfrowany_tekst, liczba_powtorzen
+
+
+def zadanie_szyfrowanie():
+    with open("CKE/zad_77/dokad.txt", "r", encoding="utf-8") as plik:
+        tekst_wejsciowy = plik.readline().strip()
+
+    klucz = "LUBIMYCZYTAC"
+    tekst_zaszyfrowany, powtorzenia = vigenere(tekst_wejsciowy, klucz, True)
+
+    print("77.1")
+    print("Liczba powtórzeń klucza:", powtorzenia)
+    print("Tekst zaszyfrowany:", tekst_zaszyfrowany)
+
+    return f"77.1\na) {powtorzenia}\nb) {tekst_zaszyfrowany}\n"
+
+
+def odszyfrowanie():
+    with open("CKE/zad_77/szyfr.txt", "r", encoding="utf-8") as plik:
+        tekst_zaszyfrowany = plik.readline().strip()
+        klucz = plik.readline().strip()
+
+    tekst_odszyfrowany, _ = vigenere(tekst_zaszyfrowany, klucz, False)
+
+    print("77.2")
+    print("Tekst odszyfrowany:", tekst_odszyfrowany)
+
+    return f"77.2\n{tekst_odszyfrowany}\n"
+
+
+def czestosc():
+    with open("CKE/zad_77/szyfr.txt", "r", encoding="utf-8") as plik:
+        tekst_zaszyfrowany = plik.readline().strip()
+        klucz = plik.readline().strip()
+
+    wystapienia_liter = [0] * 26
+    for znak in tekst_zaszyfrowany:
+        if 'A' <= znak <= 'Z':
+            wystapienia_liter[ord(znak) - ord('A')] += 1
+
+    print("77.3 a) Liczby wystąpień liter:")
+    wynik = "77.3\na)\n"
+    for i, ilosc in enumerate(wystapienia_liter):
+        litera = chr(i + ord('A'))
+        print(f"{litera}: {ilosc}")
+        wynik += f"{litera}: {ilosc}\n"
+
+    suma_liter = sum(wystapienia_liter)
+    suma_kombinacji = sum(c * (c - 1) for c in wystapienia_liter)
+
+    if suma_liter > 1:
+        wskaznik_zbieznosci = suma_kombinacji / (suma_liter * (suma_liter - 1))
+        szacunkowyklucz = 0.0285 / (wskaznik_zbieznosci - 0.0385)
+        szacunkowyklucz = round(szacunkowyklucz, 2)
+    else:
+        szacunkowyklucz = 0.0
+
+    print(f"\nSzacunkowa długość klucza: {szacunkowyklucz}")
+    print(f"Dokładna długość klucza: {len(klucz)}")
+
+    wynik += f"\nSzacunkowa długość klucza: {szacunkowyklucz}\nDokładna długość klucza: {len(klucz)}\n"
+    return wynik
+
+
+if __name__ == "__main__":
+    wynik_koncowy = (
+        zadanie_szyfrowanie() + "\n" +
+        odszyfrowanie() + "\n" +
+        czestosc()
+    )
